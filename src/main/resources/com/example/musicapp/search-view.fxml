@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicapp.SearchViewController">
+   <children>
+      <Button layoutX="259.0" layoutY="118.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="Search" />
+      <ChoiceBox fx:id="choiceBox" layoutX="31.0" layoutY="70.0" prefWidth="150.0" />
+      <TextField layoutX="204.0" layoutY="70.0" prefHeight="26.0" prefWidth="363.0" />
+      <ImageView fitHeight="203.0" fitWidth="252.0" layoutX="199.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo1.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="204.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search your song!" textAlignment="CENTER" wrappingWidth="210.21630859375">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
