@@ -8,7 +8,5 @@ public class LoginController {
     @FXML
     void onLoginButtonClicked(ActionEvent event) {
         event.notify();
-
     }
-
 }

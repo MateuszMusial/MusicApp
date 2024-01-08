@@ -16,10 +16,10 @@ public class HelloApplication extends Application {
         stage.setTitle("MusicApp");
         stage.setScene(scene);
         stage.show();
-
     }
 
     public static void main(String[] args) {
         launch();
     }
+
 }
