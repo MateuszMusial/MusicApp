@@ -8,6 +8,7 @@ module com.example.musicapp {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
+    requires java.sql;
 
 
     opens com.example.musicapp to javafx.fxml;
