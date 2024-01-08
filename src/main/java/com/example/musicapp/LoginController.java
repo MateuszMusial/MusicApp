@@ -9,7 +9,5 @@ public class LoginController {
     void onLoginButtonClicked(ActionEvent event) {
         event.notify();
 
-
-
     }
 }
