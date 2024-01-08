@@ -1,5 +1,6 @@
 Screenshots:
 
+<img width="590" alt="Zrzut ekranu 2024-01-8 o 20 31 24" src="https://github.com/MateuszMusial/MusicApp/assets/101057411/3c0f23cc-0556-4ff8-86ca-4a11a513f3fa">
 
 <img width="533" alt="Zrzut ekranu 2024-01-6 o 17 45 59" src="https://github.com/MateuszMusial/MusicApp/assets/101057411/b65a437d-b928-47bc-8fa3-8414c2b87869">
 
