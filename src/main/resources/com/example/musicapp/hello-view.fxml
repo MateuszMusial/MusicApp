@@ -24,6 +24,6 @@
         <Image url="@logo1.png"/>
     </ImageView>
 
-    <Button blendMode="MULTIPLY" mnemonicParsing="false" text="Login" />
-    <Button blendMode="MULTIPLY" mnemonicParsing="false" text="Register" />
+    <Button blendMode="MULTIPLY" mnemonicParsing="false" text="Login" onAction="#onLoginButtonClick" />
+    <Button blendMode="MULTIPLY" mnemonicParsing="false" text="Register" onAction="#onRegisterButtonClick" />
 </VBox>

@@ -22,15 +22,11 @@
     <PasswordField blendMode="SOFT_LIGHT" layoutX="250.0" layoutY="165.0" />
     <Text layoutX="174.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
     <TextField blendMode="SOFT_LIGHT" layoutX="250.0" layoutY="215.0" />
-    <Text layoutX="174.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" />
-    <TextField blendMode="SOFT_LIGHT" layoutX="250.0" layoutY="265.0" />
-    <Text layoutX="174.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" />
-    <TextField blendMode="SOFT_LIGHT" layoutX="250.0" layoutY="315.0" />
-    <Button blendMode="MULTIPLY" layoutX="274.0" layoutY="358.0" mnemonicParsing="false" onAction="#onRegisterButtonClicked" text="Register">
+    <Button blendMode="MULTIPLY" layoutX="281.0" layoutY="268.0" mnemonicParsing="false" onAction="#onRegisterButtonClicked" text="Register">
       <font>
          <Font name="Avenir Next Heavy" size="17.0" />
       </font></Button>
-    <ImageView blendMode="SOFT_LIGHT" cache="true" fitHeight="147.0" fitWidth="132.0" layoutX="443.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="25.0">
+    <ImageView blendMode="SOFT_LIGHT" cache="true" fitHeight="147.0" fitWidth="132.0" layoutX="454.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0">
         <image>
             <Image url="@logo1.png" />
         </image>

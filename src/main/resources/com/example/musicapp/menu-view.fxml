@@ -9,22 +9,22 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicapp.MenuViewController">
    <children>
-      <Button layoutX="147.0" layoutY="184.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Play Song">
+      <Button layoutX="147.0" layoutY="184.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Play Song" onAction="#onPlayButtonClick">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="147.0" layoutY="282.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Playlists">
+      <Button layoutX="147.0" layoutY="282.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Playlists" onAction="#onPlaylistButtonClick">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="332.0" layoutY="184.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Search">
+      <Button layoutX="332.0" layoutY="184.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Search" onAction="#onSearchButtonClick">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="332.0" layoutY="282.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Logout">
+      <Button layoutX="332.0" layoutY="282.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="112.0" text="Logout" onAction="#onLogoutButtonClick">
          <font>
             <Font size="18.0" />
          </font>
