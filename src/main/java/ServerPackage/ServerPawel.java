@@ -9,10 +9,12 @@ import java.util.concurrent.Callable;
 
 public class ServerPawel implements Callable<Void> {
 
+    // private static final String DATABASE_URL = "jdbc:sqlite:test.db";
+
     public static void main(String[] args) {
         ServerPawel serverPawel = new ServerPawel();
         try {
-            serverPawel.call(); // Wywołanie metody call w ramach interfejsu Callable
+            serverPawel.call();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -23,19 +25,24 @@ public class ServerPawel implements Callable<Void> {
         ServerSocket serverSocket = null;
 
         try {
-            serverSocket = new ServerSocket(12345); // Port, na którym serwer będzie nasłuchiwał
+            // Rejestrowanie sterownika JDBC
+            // Class.forName("org.sqlite.JDBC");
+
+            // Nawiązanie połączenia z bazą danych
+            // try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
             System.out.println("Serwer Pawel został uruchomiony.");
+            serverSocket = new ServerSocket(12345);
 
             while (true) {
                 // Akceptuj połączenie od klienta
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Klient Pawel został podłączony do serwera.");
 
-                // Obsługa klienta w oddzielnym wątku lub jako osobny Callable
-                // Przekazanie clientSocket do wątku obsługującego klienta
-                // np. new Thread(new ClientHandler(clientSocket)).start();
-                handleClient(clientSocket);
+                // Obsługa klienta
+                handleClient(clientSocket/*, connection*/);
             }
+            // }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -47,7 +54,7 @@ public class ServerPawel implements Callable<Void> {
         return null;
     }
 
-    private void handleClient(Socket clientSocket) {
+    private void handleClient(Socket clientSocket/*, Connection connection*/) {
         try {
             // Przykładowe przesyłanie danych do klienta
             OutputStream outputStream = clientSocket.getOutputStream();
@@ -62,9 +69,24 @@ public class ServerPawel implements Callable<Void> {
             String receivedMessage = new String(buffer, 0, bytesRead);
             System.out.println("Otrzymano od klienta: " + receivedMessage);
 
+            // Obsługa bazy danych
+            // Przykład wykonania zapytania SELECT
+            // String selectQuery = "SELECT * FROM tabela";
+            // try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+            //      ResultSet resultSet = preparedStatement.executeQuery()) {
+            //     while (resultSet.next()) {
+            //         // Przetwarzanie wyników zapytania
+            //         String column1 = resultSet.getString("kolumna1");
+            //         int column2 = resultSet.getInt("kolumna2");
+            //         System.out.println("Wynik z bazy danych: " + column1 + ", " + column2);
+            //     }
+            // }
+
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        } /*catch (Exception e) {
+            e.printStackTrace();
+        }*/ finally {
             try {
                 // Zamykamy połączenie z klientem
                 clientSocket.close();
