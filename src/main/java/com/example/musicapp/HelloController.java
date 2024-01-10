@@ -1,5 +1,6 @@
 package com.example.musicapp;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,16 +8,35 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloController {
+public class HelloController extends Application {
+
+    private Stage primaryStage;
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        primaryStage = stage;
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloController.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("MusicApp");
+        stage.setScene(scene);
+        HelloController helloController = fxmlLoader.getController();
+        helloController.setPrimaryStage(primaryStage);
+        stage.show();
+    }
 
     @FXML
-    protected void onLoginButtonClick() throws Exception {
+    protected void onLoginButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         Stage stage = new Stage();
         stage.setTitle("MusicApp");
         stage.setScene(scene);
+        primaryStage.close();
         stage.show();
     }
 
@@ -29,5 +49,9 @@ public class HelloController {
         stage.setTitle("MusicApp");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }
