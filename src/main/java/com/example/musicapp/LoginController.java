@@ -31,7 +31,6 @@ public class LoginController {
         // tutaj wywolujemy funkcje ktora wysyla dane do sprawdzenia i zwraca tru/false
 
         //Klient.sendToServer(inputLogin, inputPassword);
-        System.out.println("dupa!!");
         // isCredentialCorrect = funkcja1(str inputlogin, str inputpassword);
 
         if(isCredentialCorrect){
