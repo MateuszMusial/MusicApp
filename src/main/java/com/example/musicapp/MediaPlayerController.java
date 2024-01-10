@@ -18,9 +18,9 @@ public class MediaPlayerController {
     @FXML
     public Label artistLabel;
     @FXML
-    private Label totalTimeLabel;
+    public Label totalTimeLabel;
     @FXML
-    private Label songTitleLabel;
+    public Label songTitleLabel;
 
     private String fileName = "tomorrow.mp3";
 
