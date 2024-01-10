@@ -11,6 +11,8 @@ import java.io.IOException;
 
 public class LoginController {
 
+    Klient klient = new Klient();
+
     @FXML
     public Label infoLabel;
     @FXML
