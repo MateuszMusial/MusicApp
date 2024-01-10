@@ -1,12 +1,9 @@
 package com.example.musicapp;
 
-import com.dlsc.formsfx.model.structure.PasswordField;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
