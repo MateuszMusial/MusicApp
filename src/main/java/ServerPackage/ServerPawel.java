@@ -3,7 +3,7 @@ package ServerPackage;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
+import java.sql.*;
 import java.util.concurrent.Callable;
 
 public class ServerPawel implements Callable<Void> {
@@ -62,24 +62,44 @@ public class ServerPawel implements Callable<Void> {
     }
 
     private void receiveAndProcessData(Socket clientSocket) throws IOException {
-        InputStream inputStream = clientSocket.getInputStream();
-        byte[] buffer = new byte[1024];
+        try (InputStream inputStream = clientSocket.getInputStream()) {
+            byte[] buffer = new byte[1024];
 
-        // Odbierz pierwszą wiadomość
-        int bytesRead = inputStream.read(buffer);
-        String receivedMessage = new String(buffer, 0, bytesRead);
-        System.out.println("Otrzymano od klienta: " + receivedMessage);
+            // Odbierz login
+            int bytesRead = inputStream.read(buffer);
+            String login = new String(buffer, 0, bytesRead).trim();
+            System.out.println("Otrzymano login od klienta: " + login);
 
-        // Odbierz drugą wiadomość
-        bytesRead = inputStream.read(buffer);
-        String receivedMessage1 = new String(buffer, 0, bytesRead);
-        System.out.println("Otrzymano od klienta: " + receivedMessage1);
+            // Odbierz hasło
+            bytesRead = inputStream.read(buffer);
+            String password = new String(buffer, 0, bytesRead).trim();
+            System.out.println("Otrzymano hasło od klienta: " + password);
 
-        // Tutaj możesz dodać logikę przetwarzania otrzymanych danych
+            // Tutaj możesz dodać logikę przetwarzania otrzymanych danych
 
-        // Przykładowa obsługa bazy danych
-        // handleDatabase(connection);
+            // Przykładowa obsługa bazy danych PostgreSQL
+            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/twojastacjabazodanowa", "login", "haslo")) {
+                String query = "SELECT * FROM uzytkownicy WHERE login = ? AND haslo = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setString(1, login);
+                    preparedStatement.setString(2, password);
+
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        if (resultSet.next()) {
+                            System.out.println("Zalogowano pomyślnie.");
+                            // Tutaj możesz dodać dodatkową logikę w przypadku udanego logowania
+                        } else {
+                            System.out.println("Błędny login lub hasło.");
+                            // Tutaj możesz dodać dodatkową logikę w przypadku nieudanego logowania
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
 
     // Przykładowa metoda obsługi bazy danych
@@ -89,6 +109,8 @@ public class ServerPawel implements Callable<Void> {
         System.out.println("Czy użytkownik istnieje w bazie danych? " + userExists);
 
     }
+
+
 
     private void closeClientSocket(Socket clientSocket) {
         try {

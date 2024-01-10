@@ -42,12 +42,12 @@ public class KlientPawel {
     private static void sendToServer(Socket socket) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
 
-        String message = "Witaj,";
-        outputStream.write(message.getBytes());
+        String login = "admin";
+        outputStream.write(login.getBytes());
         outputStream.flush();
 
-        String message1 = "to jest klient!";
-        outputStream.write(message1.getBytes());
+        String password = "admin";
+        outputStream.write(password.getBytes());
         outputStream.flush();
     }
 
