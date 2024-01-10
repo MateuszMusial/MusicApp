@@ -37,15 +37,16 @@ public class Klient {
         String receivedMessage = new String(buffer, 0, bytesRead);
         System.out.println("Otrzymano od serwera: " + receivedMessage);
     }
-    private static void sendToServer(Socket socket) throws IOException {
+    public static void sendToServer(Socket socket) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
 
-        String login = "admin";
-        outputStream.write(login.getBytes());
+        LoginController klient = new LoginController();
+        //String login = "admin";
+        //outputStream.write(login.getBytes());
         outputStream.flush();
 
-        String password = "admin";
-        outputStream.write(password.getBytes());
+        //String password = "admin";
+        //outputStream.write(password.getBytes());
         outputStream.flush();
     }
 }

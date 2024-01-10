@@ -1,7 +1,7 @@
 package com.example.musicapp;
 
 import ServerPackage.DBInterface;
-import ServerPackage.ServerPawel;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,18 +12,16 @@ import java.sql.*;
 import java.util.concurrent.Callable;
 
 public class Server implements Callable<Void> {
-
     private static final int SERVER_PORT = 12345;
 
     public static void main(String[] args) {
-        ServerPawel serverPawel = new ServerPawel();
+        Server server = new Server();
         try {
-            serverPawel.call();
+            server.call();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
     @Override
     public Void call() throws Exception {
         ServerSocket serverSocket = null;
@@ -104,8 +102,6 @@ public class Server implements Callable<Void> {
         return null;
     }
 
-
-
     // Przykładowa metoda obsługi bazy danych
     private void handleDatabase(Connection connection) {
         DBInterface dbInterface = new DBInterface(connection);
@@ -113,8 +109,6 @@ public class Server implements Callable<Void> {
         System.out.println("Czy użytkownik istnieje w bazie danych? " + userExists);
 
     }
-
-
 
     private void closeClientSocket(Socket clientSocket) {
         try {
