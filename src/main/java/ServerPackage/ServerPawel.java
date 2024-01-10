@@ -1,15 +1,14 @@
 package ServerPackage;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
 import java.util.concurrent.Callable;
 
 public class ServerPawel implements Callable<Void> {
 
-    // private static final String DATABASE_URL = "jdbc:sqlite:test.db";
+    private static final int SERVER_PORT = 12345;
 
     public static void main(String[] args) {
         ServerPawel serverPawel = new ServerPawel();
@@ -25,74 +24,79 @@ public class ServerPawel implements Callable<Void> {
         ServerSocket serverSocket = null;
 
         try {
-            // Rejestrowanie sterownika JDBC
-            // Class.forName("org.sqlite.JDBC");
-
-            // Nawiązanie połączenia z bazą danych
-            // try (Connection connection = DriverManager.getConnection(DATABASE_URL)) {
             System.out.println("Serwer Pawel został uruchomiony.");
-            serverSocket = new ServerSocket(12345);
+            serverSocket = new ServerSocket(SERVER_PORT);
 
             while (true) {
-                // Akceptuj połączenie od klienta
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Klient Pawel został podłączony do serwera.");
-
-                // Obsługa klienta
-                handleClient(clientSocket/*, connection*/);
+                handleClient(clientSocket);
             }
-            // }
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                serverSocket.close();
-            }
+            closeServerSocket(serverSocket);
         }
 
         return null;
     }
 
-    private void handleClient(Socket clientSocket/*, Connection connection*/) {
+    private void handleClient(Socket clientSocket) {
         try {
-            // Przykładowe przesyłanie danych do klienta
-            OutputStream outputStream = clientSocket.getOutputStream();
-            String message = "Witaj, to jest serwer!";
-            outputStream.write(message.getBytes());
-            outputStream.flush();
-
-            // Tutaj możesz dodać logikę odbierania danych od klienta
-            InputStream inputStream = clientSocket.getInputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead = inputStream.read(buffer);
-            String receivedMessage = new String(buffer, 0, bytesRead);
-            System.out.println("Otrzymano od klienta: " + receivedMessage);
-
-            // Obsługa bazy danych
-            // Przykład wykonania zapytania SELECT
-            // String selectQuery = "SELECT * FROM tabela";
-            // try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-            //      ResultSet resultSet = preparedStatement.executeQuery()) {
-            //     while (resultSet.next()) {
-            //         // Przetwarzanie wyników zapytania
-            //         String column1 = resultSet.getString("kolumna1");
-            //         int column2 = resultSet.getInt("kolumna2");
-            //         System.out.println("Wynik z bazy danych: " + column1 + ", " + column2);
-            //     }
-            // }
+            sendWelcomeMessage(clientSocket);
+            receiveAndProcessData(clientSocket);
 
         } catch (IOException e) {
             e.printStackTrace();
-        } /*catch (Exception e) {
+        } finally {
+            closeClientSocket(clientSocket);
+        }
+    }
+
+    private void sendWelcomeMessage(Socket clientSocket) throws IOException {
+        OutputStream outputStream = clientSocket.getOutputStream();
+        String message = "Witaj, to jest serwer!";
+        outputStream.write(message.getBytes());
+        outputStream.flush();
+    }
+
+    private void receiveAndProcessData(Socket clientSocket) throws IOException {
+        InputStream inputStream = clientSocket.getInputStream();
+        byte[] buffer = new byte[1024];
+        int bytesRead = inputStream.read(buffer);
+        String receivedMessage = new String(buffer, 0, bytesRead);
+        System.out.println("Otrzymano od klienta: " + receivedMessage);
+
+        // Tutaj możesz dodać logikę przetwarzania otrzymanych danych
+
+        // Przykładowa obsługa bazy danych
+        // handleDatabase(connection);
+    }
+
+    // Przykładowa metoda obsługi bazy danych
+    private void handleDatabase(Connection connection) {
+        DBInterface dbInterface = new DBInterface(connection);
+        boolean userExists = dbInterface.checkUserCredentials("admin", "admin");
+        System.out.println("Czy użytkownik istnieje w bazie danych? " + userExists);
+
+    }
+
+    private void closeClientSocket(Socket clientSocket) {
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
             e.printStackTrace();
-        }*/ finally {
-            try {
-                // Zamykamy połączenie z klientem
-                clientSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        }
+    }
+
+    private void closeServerSocket(ServerSocket serverSocket) {
+        try {
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                serverSocket.close();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

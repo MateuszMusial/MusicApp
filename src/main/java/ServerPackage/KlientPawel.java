@@ -17,18 +17,11 @@ public class KlientPawel {
             Socket socket = new Socket(serverAddress, serverPort);
             System.out.println("Klient Pawel został podłączony do serwera.");
 
-            // Przykładowe odbieranie danych od serwera
-            InputStream inputStream = socket.getInputStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead = inputStream.read(buffer);
-            String receivedMessage = new String(buffer, 0, bytesRead);
-            System.out.println("Otrzymano od serwera: " + receivedMessage);
+            // Odbieranie powitalnej wiadomości od serwera
+            receiveWelcomeMessage(socket);
 
             // Tutaj możesz dodać logikę wysyłania danych do serwera
-            OutputStream outputStream = socket.getOutputStream();
-            String message = "Witaj, to jest klient!";
-            outputStream.write(message.getBytes());
-
+            sendToServer(socket);
 
             // Zamykamy połączenie z serwerem
             socket.close();
@@ -36,5 +29,20 @@ public class KlientPawel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void receiveWelcomeMessage(Socket socket) throws IOException {
+        InputStream inputStream = socket.getInputStream();
+        byte[] buffer = new byte[1024];
+        int bytesRead = inputStream.read(buffer);
+        String receivedMessage = new String(buffer, 0, bytesRead);
+        System.out.println("Otrzymano od serwera: " + receivedMessage);
+    }
+
+    private static void sendToServer(Socket socket) throws IOException {
+        OutputStream outputStream = socket.getOutputStream();
+        String message = "Witaj, to jest klient!";
+        outputStream.write(message.getBytes());
+        outputStream.flush();
     }
 }

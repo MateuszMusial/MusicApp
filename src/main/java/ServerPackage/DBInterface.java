@@ -12,9 +12,9 @@ public class DBInterface {
     private static final String PASSWORD = "postgres";
     private Connection connection;
 
-    public DBInterface() {
+    public DBInterface(Connection connection) {
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             System.err.println("Błąd inicjalizacji połączenia z bazą danych: " + e.getMessage());
         }
