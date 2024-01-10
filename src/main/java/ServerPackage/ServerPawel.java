@@ -64,15 +64,23 @@ public class ServerPawel implements Callable<Void> {
     private void receiveAndProcessData(Socket clientSocket) throws IOException {
         InputStream inputStream = clientSocket.getInputStream();
         byte[] buffer = new byte[1024];
+
+        // Odbierz pierwszą wiadomość
         int bytesRead = inputStream.read(buffer);
         String receivedMessage = new String(buffer, 0, bytesRead);
         System.out.println("Otrzymano od klienta: " + receivedMessage);
+
+        // Odbierz drugą wiadomość
+        bytesRead = inputStream.read(buffer);
+        String receivedMessage1 = new String(buffer, 0, bytesRead);
+        System.out.println("Otrzymano od klienta: " + receivedMessage1);
 
         // Tutaj możesz dodać logikę przetwarzania otrzymanych danych
 
         // Przykładowa obsługa bazy danych
         // handleDatabase(connection);
     }
+
 
     // Przykładowa metoda obsługi bazy danych
     private void handleDatabase(Connection connection) {

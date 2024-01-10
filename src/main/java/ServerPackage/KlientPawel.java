@@ -41,8 +41,14 @@ public class KlientPawel {
 
     private static void sendToServer(Socket socket) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
-        String message = "Witaj, to jest klient!";
+
+        String message = "Witaj,";
         outputStream.write(message.getBytes());
         outputStream.flush();
+
+        String message1 = "to jest klient!";
+        outputStream.write(message1.getBytes());
+        outputStream.flush();
     }
+
 }
