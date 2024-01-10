@@ -61,7 +61,7 @@ public class ServerPawel implements Callable<Void> {
         outputStream.flush();
     }
 
-    private void receiveAndProcessData(Socket clientSocket) throws IOException {
+    private Boolean receiveAndProcessData(Socket clientSocket) throws IOException {
         try (InputStream inputStream = clientSocket.getInputStream()) {
             byte[] buffer = new byte[1024];
 
@@ -75,8 +75,6 @@ public class ServerPawel implements Callable<Void> {
             String password = new String(buffer, 0, bytesRead).trim();
             System.out.println("Otrzymano hasło od klienta: " + password);
 
-            // Tutaj możesz dodać logikę przetwarzania otrzymanych danych
-
             // Przykładowa obsługa bazy danych PostgreSQL
             try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/twojastacjabazodanowa", "login", "haslo")) {
                 String query = "SELECT * FROM uzytkownicy WHERE login = ? AND haslo = ?";
@@ -87,10 +85,10 @@ public class ServerPawel implements Callable<Void> {
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         if (resultSet.next()) {
                             System.out.println("Zalogowano pomyślnie.");
-                            // Tutaj możesz dodać dodatkową logikę w przypadku udanego logowania
+                            return true;
                         } else {
                             System.out.println("Błędny login lub hasło.");
-                            // Tutaj możesz dodać dodatkową logikę w przypadku nieudanego logowania
+                            return false;
                         }
                     }
                 }
@@ -98,6 +96,7 @@ public class ServerPawel implements Callable<Void> {
                 e.printStackTrace();
             }
         }
+        return null;
     }
 
 
