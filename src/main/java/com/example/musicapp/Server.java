@@ -9,8 +9,9 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
+import java.util.concurrent.Callable;
 
-public class Server {
+public class Server implements Callable<Void> {
 
     private static final int SERVER_PORT = 12345;
 
