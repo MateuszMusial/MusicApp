@@ -7,46 +7,50 @@ import java.net.Socket;
 
 public class Klient {
 
+    private static Socket socket;
+
     public static void main(String[] args) {
         try {
             // Adres i port serwera
             String serverAddress = "localhost";
             int serverPort = 12345;
-
-            // Nawiązanie połączenia z serwerem
-            Socket socket = new Socket(serverAddress, serverPort);
-            System.out.println("Klient Pawel został podłączony do serwera.");
-
-            // Odbieranie powitalnej wiadomości od serwera
-            receiveWelcomeMessage(socket);
-
-            // Tutaj możesz dodać logikę wysyłania danych do serwera
-            sendToServer(socket);
-
-            // Zamykamy połączenie z serwerem
-            socket.close();
-
+            openConnection(serverAddress, serverPort);
+            receiveWelcomeMessage();
+            sendToServer();
+            closeConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private static void receiveWelcomeMessage(Socket socket) throws IOException {
+
+    private static void openConnection(String serverAddress, int serverPort) throws IOException {
+        socket = new Socket(serverAddress, serverPort);
+        System.out.println("Klient Pawel został podłączony do serwera.");
+    }
+
+    private static void closeConnection() throws IOException {
+        socket.close();
+        System.out.println("Klient Pawel został odłączony od serwera.");
+    }
+
+    private static void receiveWelcomeMessage() throws IOException {
         InputStream inputStream = socket.getInputStream();
         byte[] buffer = new byte[1024];
         int bytesRead = inputStream.read(buffer);
         String receivedMessage = new String(buffer, 0, bytesRead);
         System.out.println("Otrzymano od serwera: " + receivedMessage);
     }
-    public static void sendToServer(Socket socket) throws IOException {
-        try (OutputStream outputStream = socket.getOutputStream()) {
 
-            //String login = "admin";
-            //outputStream.write(login.getBytes());
-            outputStream.flush();
+    public static void sendToServer() throws IOException {
+        OutputStream outputStream = socket.getOutputStream();
 
-            //String password = "admin";
-            //outputStream.write(password.getBytes());
-            outputStream.flush();
-        }
+        // Tutaj możesz dodać logikę do przesyłania danych do serwera
+        // String login = "admin";
+        // outputStream.write(login.getBytes());
+        // outputStream.flush();
+
+        // String password = "admin";
+        // outputStream.write(password.getBytes());
+        // outputStream.flush();
     }
 }

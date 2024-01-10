@@ -2,7 +2,6 @@ package com.example.musicapp;
 
 import ServerPackage.DBInterface;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,6 +12,8 @@ import java.util.concurrent.Callable;
 
 public class Server implements Callable<Void> {
     private static final int SERVER_PORT = 12345;
+    private ServerSocket serverSocket;
+    private Socket clientSocket;
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -22,49 +23,48 @@ public class Server implements Callable<Void> {
             e.printStackTrace();
         }
     }
+
     @Override
     public Void call() throws Exception {
-        ServerSocket serverSocket = null;
-
         try {
             System.out.println("Serwer Pawel został uruchomiony.");
             serverSocket = new ServerSocket(SERVER_PORT);
 
             while (true) {
-                Socket clientSocket = serverSocket.accept();
+                clientSocket = serverSocket.accept();
                 System.out.println("Klient Pawel został podłączony do serwera.");
-                handleClient(clientSocket);
+                handleClient();
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            closeServerSocket(serverSocket);
+            closeServerSocket();
         }
 
         return null;
     }
 
-    private void handleClient(Socket clientSocket) {
+    private void handleClient() {
         try {
-            sendWelcomeMessage(clientSocket);
-            receiveAndProcessData(clientSocket);
+            sendWelcomeMessage();
+            receiveAndProcessData();
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            closeClientSocket(clientSocket);
+            closeClientSocket();
         }
     }
 
-    private void sendWelcomeMessage(Socket clientSocket) throws IOException {
+    private void sendWelcomeMessage() throws IOException {
         OutputStream outputStream = clientSocket.getOutputStream();
         String message = "Witaj, to jest serwer!";
         outputStream.write(message.getBytes());
         outputStream.flush();
     }
 
-    private Boolean receiveAndProcessData(Socket clientSocket) throws IOException {
+    private Boolean receiveAndProcessData() throws IOException {
         try (InputStream inputStream = clientSocket.getInputStream()) {
             byte[] buffer = new byte[1024];
 
@@ -110,7 +110,7 @@ public class Server implements Callable<Void> {
 
     }
 
-    private void closeClientSocket(Socket clientSocket) {
+    private void closeClientSocket() {
         try {
             clientSocket.close();
         } catch (IOException e) {
@@ -118,7 +118,7 @@ public class Server implements Callable<Void> {
         }
     }
 
-    private void closeServerSocket(ServerSocket serverSocket) {
+    private void closeServerSocket() {
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
                 serverSocket.close();
