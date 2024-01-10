@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class ServerKlient {
+public class Klient {
 
     public static void main(String[] args) {
         try {
