@@ -13,6 +13,7 @@ public class LoginController {
 
     Klient klient = new Klient();
 
+
     @FXML
     public Label infoLabel;
     @FXML
@@ -29,6 +30,7 @@ public class LoginController {
 
         // tutaj wywolujemy funkcje ktora wysyla dane do sprawdzenia i zwraca tru/false
 
+        Klient.sendToServer(inputLogin, inputPassword);
 
         // isCredentialCorrect = funkcja1(str inputlogin, str inputpassword);
 

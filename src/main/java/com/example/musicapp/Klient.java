@@ -16,7 +16,9 @@ public class Klient {
             int serverPort = 12345;
             openConnection(serverAddress, serverPort);
             receiveWelcomeMessage();
-            sendToServer();
+
+            // LoginController
+
             closeConnection();
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,16 +43,13 @@ public class Klient {
         System.out.println("Otrzymano od serwera: " + receivedMessage);
     }
 
-    public static void sendToServer() throws IOException {
+    public static void sendToServer(String login, String password) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
 
-        // Tutaj możesz dodać logikę do przesyłania danych do serwera
-        // String login = "admin";
-        // outputStream.write(login.getBytes());
-        // outputStream.flush();
+        outputStream.write(login.getBytes());
+        outputStream.flush();
 
-        // String password = "admin";
-        // outputStream.write(password.getBytes());
-        // outputStream.flush();
+        outputStream.write(password.getBytes());
+        outputStream.flush();
     }
 }
