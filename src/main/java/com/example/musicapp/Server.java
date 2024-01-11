@@ -21,7 +21,7 @@ public class Server implements Callable<Void> {
 
     public static void main(String[] args) throws ClassNotFoundException {
 
-        //Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
 
 
         Server server = new Server();
@@ -87,9 +87,9 @@ public class Server implements Callable<Void> {
             bytesRead = inputStream.read(buffer);
             String password = new String(buffer, 0, bytesRead).trim();
             System.out.println("Otrzymano hasło od klienta: " + password);
-/*
+
             // obsługa bazy danych MySQL
-            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "passowrd")) {
+            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "Kipindo1!")) {
                 String query = "SELECT * FROM uzytkownik WHERE login = ? AND haslo = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, login);
@@ -107,7 +107,6 @@ public class Server implements Callable<Void> {
                 e.printStackTrace();
             }
 
- */
         }
     }
 
