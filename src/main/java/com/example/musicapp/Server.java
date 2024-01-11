@@ -19,7 +19,7 @@ public class Server implements Callable<Void> {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/MusicApp";
 
     public static void main(String[] args) throws ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        //Class.forName("com.mysql.cj.jdbc.Driver");
 
         Server server = new Server();
         try {
@@ -84,7 +84,7 @@ public class Server implements Callable<Void> {
             System.out.println("Otrzymano hasło od klienta: " + password);
 
             // Przykładowa obsługa bazy danych MySQL
-            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "Kipindo12")) {
+            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "passowrd")) {
                 String query = "SELECT * FROM uzytkownicy WHERE login = ? AND haslo = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, login);
