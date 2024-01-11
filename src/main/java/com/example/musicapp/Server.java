@@ -54,7 +54,7 @@ public class Server implements Callable<Void> {
         try {
             sendWelcomeMessage();
             //receiveAndProcessDataLogin();
-            receiveAndProcessDataRegistration();
+            //receiveAndProcessDataRegistration();
 
         } catch (IOException e) {
             e.printStackTrace();

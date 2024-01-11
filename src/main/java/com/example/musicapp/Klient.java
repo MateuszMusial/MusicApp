@@ -20,7 +20,7 @@ public class Klient {
             openConnection(serverAddress, serverPort);
             receiveWelcomeMessage();
             //sendToServerLogin("Admin", "Admin");
-            sendRegistrationToServer("imie", "nazwisko", "user", "user");
+            //sendRegistrationToServer("imie", "nazwisko", "user", "user");
 
             // LoginController
 
