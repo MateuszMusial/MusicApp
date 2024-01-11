@@ -89,7 +89,7 @@ public class Server implements Callable<Void> {
             System.out.println("Otrzymano hasło od klienta: " + password);
 
             // obsługa bazy danych MySQL
-            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "Kipindo1!")) {
+            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "password")) {
                 String query = "SELECT * FROM uzytkownik WHERE login = ? AND haslo = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, login);

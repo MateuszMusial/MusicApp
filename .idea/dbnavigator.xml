@@ -20,9 +20,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="45a29ef8-1599-42c8-a1d4-8e58d0bd5ea0" object-ref="schemas/musicapp/tables/uzytkownik" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="45a29ef8-1599-42c8-a1d4-8e58d0bd5ea0" />
