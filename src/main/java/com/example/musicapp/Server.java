@@ -5,18 +5,25 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
 public class Server implements Callable<Void> {
     private static final int SERVER_PORT = 12345;
     private ServerSocket serverSocket;
     private Socket clientSocket;
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/MusicApp";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
         Server server = new Server();
         try {
             server.call();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,9 +82,9 @@ public class Server implements Callable<Void> {
             bytesRead = inputStream.read(buffer);
             String password = new String(buffer, 0, bytesRead).trim();
             System.out.println("Otrzymano hasło od klienta: " + password);
-/*
-            // Przykładowa obsługa bazy danych PostgreSQL
-            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:1234/twojastacjabazodanowa", "login", "haslo")) {
+
+            // Przykładowa obsługa bazy danych MySQL
+            try (Connection connection = DriverManager.getConnection(DB_URL, "root", "Kipindo12")) {
                 String query = "SELECT * FROM uzytkownicy WHERE login = ? AND haslo = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, login);
@@ -86,28 +93,17 @@ public class Server implements Callable<Void> {
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         if (resultSet.next()) {
                             System.out.println("Zalogowano pomyślnie.");
-                            return true;
                         } else {
                             System.out.println("Błędny login lub hasło.");
-                            return false;
                         }
                     }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }*/
         }
     }
-/*
-    // Przykładowa metoda obsługi bazy danych
-    private void handleDatabase(Connection connection) {
-        DBInterface dbInterface = new DBInterface(connection);
-        boolean userExists = dbInterface.checkUserCredentials("admin", "admin");
-        System.out.println("Czy użytkownik istnieje w bazie danych? " + userExists);
 
-    }
-*/
     private void closeClientSocket() {
         try {
             clientSocket.close();
