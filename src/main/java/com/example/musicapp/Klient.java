@@ -1,5 +1,6 @@
 package com.example.musicapp;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,7 +8,7 @@ import java.net.Socket;
 
 public class Klient {
     String login = "Admin";
-    String password= "Admin";
+    String password = "Admin";
 
     private static Socket socket;
 
@@ -18,7 +19,8 @@ public class Klient {
             int serverPort = 12345;
             openConnection(serverAddress, serverPort);
             receiveWelcomeMessage();
-            sendToServer("Admin", "Admin");
+            //sendToServerLogin("Admin", "Admin");
+            sendRegistrationToServer("imie", "nazwisko", "user", "user");
 
             // LoginController
 
@@ -46,7 +48,7 @@ public class Klient {
         System.out.println("Otrzymano od serwera: " + receivedMessage);
     }
 
-    public static void sendToServer(String login, String password) throws IOException {
+    public static void sendToServerLogin(String login, String password) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
 
         outputStream.write(login.getBytes());
@@ -54,5 +56,25 @@ public class Klient {
 
         outputStream.write(password.getBytes());
         outputStream.flush();
+    }
+
+    public static void sendRegistrationToServer(String firstName, String lastName, String login, String password) throws IOException {
+        try (DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
+            // Wyślij imię
+            dataOutputStream.writeUTF(firstName);
+            dataOutputStream.flush();
+
+            // Wyślij nazwisko
+            dataOutputStream.writeUTF(lastName);
+            dataOutputStream.flush();
+
+            // Wyślij login
+            dataOutputStream.writeUTF(login);
+            dataOutputStream.flush();
+
+            // Wyślij hasło
+            dataOutputStream.writeUTF(password);
+            dataOutputStream.flush();
+        }
     }
 }
