@@ -16,10 +16,13 @@ public class Server implements Callable<Void> {
     private static final int SERVER_PORT = 12345;
     private ServerSocket serverSocket;
     private Socket clientSocket;
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/MusicApp";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/MusicApp?useSSL=false&serverTimezone=UTC";
+
 
     public static void main(String[] args) throws ClassNotFoundException {
+
         //Class.forName("com.mysql.cj.jdbc.Driver");
+
 
         Server server = new Server();
         try {
@@ -71,6 +74,8 @@ public class Server implements Callable<Void> {
 
     private void receiveAndProcessData() throws IOException {
         try (InputStream inputStream = clientSocket.getInputStream()) {
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+
             byte[] buffer = new byte[1024];
 
             // Odbierz login
@@ -82,7 +87,7 @@ public class Server implements Callable<Void> {
             bytesRead = inputStream.read(buffer);
             String password = new String(buffer, 0, bytesRead).trim();
             System.out.println("Otrzymano hasło od klienta: " + password);
-
+/*
             // obsługa bazy danych MySQL
             try (Connection connection = DriverManager.getConnection(DB_URL, "root", "passowrd")) {
                 String query = "SELECT * FROM uzytkownik WHERE login = ? AND haslo = ?";
@@ -101,6 +106,8 @@ public class Server implements Callable<Void> {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+ */
         }
     }
 
