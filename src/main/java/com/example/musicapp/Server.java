@@ -1,13 +1,10 @@
 package com.example.musicapp;
 
-import ServerPackage.DBInterface;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.*;
 import java.util.concurrent.Callable;
 
 public class Server implements Callable<Void> {
@@ -19,6 +16,7 @@ public class Server implements Callable<Void> {
         Server server = new Server();
         try {
             server.call();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +62,7 @@ public class Server implements Callable<Void> {
         outputStream.flush();
     }
 
-    private Boolean receiveAndProcessData() throws IOException {
+    private void receiveAndProcessData() throws IOException {
         try (InputStream inputStream = clientSocket.getInputStream()) {
             byte[] buffer = new byte[1024];
 
@@ -77,9 +75,9 @@ public class Server implements Callable<Void> {
             bytesRead = inputStream.read(buffer);
             String password = new String(buffer, 0, bytesRead).trim();
             System.out.println("Otrzymano hasło od klienta: " + password);
-
+/*
             // Przykładowa obsługa bazy danych PostgreSQL
-            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/twojastacjabazodanowa", "login", "haslo")) {
+            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:1234/twojastacjabazodanowa", "login", "haslo")) {
                 String query = "SELECT * FROM uzytkownicy WHERE login = ? AND haslo = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, login);
@@ -98,10 +96,10 @@ public class Server implements Callable<Void> {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }*/
         }
-        return null;
     }
-
+/*
     // Przykładowa metoda obsługi bazy danych
     private void handleDatabase(Connection connection) {
         DBInterface dbInterface = new DBInterface(connection);
@@ -109,7 +107,7 @@ public class Server implements Callable<Void> {
         System.out.println("Czy użytkownik istnieje w bazie danych? " + userExists);
 
     }
-
+*/
     private void closeClientSocket() {
         try {
             clientSocket.close();

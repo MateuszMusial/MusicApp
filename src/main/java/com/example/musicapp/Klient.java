@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class Klient {
+    String login = "Admin";
+    String password= "Admin";
 
     private static Socket socket;
 
@@ -16,6 +18,7 @@ public class Klient {
             int serverPort = 12345;
             openConnection(serverAddress, serverPort);
             receiveWelcomeMessage();
+            sendToServer("Admin", "Admin");
 
             // LoginController
 
