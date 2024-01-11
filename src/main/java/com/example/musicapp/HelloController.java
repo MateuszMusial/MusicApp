@@ -48,6 +48,7 @@ public class HelloController extends Application {
         Stage stage = new Stage();
         stage.setTitle("MusicApp");
         stage.setScene(scene);
+        primaryStage.close();
         stage.show();
     }
 

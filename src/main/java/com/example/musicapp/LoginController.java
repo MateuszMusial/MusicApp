@@ -23,7 +23,7 @@ public class LoginController {
 
     @FXML
     void onLoginButtonClicked() throws IOException {
-        boolean isCredentialCorrect = false;
+        boolean isCredentialCorrect = true;
 
         String inputLogin = loginTextField.getText();
         String inputPassword = passwordField.getText();
@@ -34,13 +34,18 @@ public class LoginController {
         // isCredentialCorrect = funkcja1(str inputlogin, str inputpassword);
 
         if(isCredentialCorrect){
+
+
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("login-view.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             Stage stage = new Stage();
             stage.setTitle("MusicApp");
             stage.setScene(scene);
             stage.show();
+
+            Stage currentStage = (Stage) loginTextField.getScene().getWindow();
+            currentStage.close();
         }
         else{
             infoLabel.setText("Wrong Login or Password!");

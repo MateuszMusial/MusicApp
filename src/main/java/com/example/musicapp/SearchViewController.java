@@ -43,6 +43,9 @@ public class SearchViewController implements Initializable {
 
 
         if(isSongFound){
+            Stage currentStage = (Stage) textInput.getScene().getWindow();
+            currentStage.close();
+
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("player-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
@@ -57,6 +60,9 @@ public class SearchViewController implements Initializable {
     }
 
     public void onBackButtonClick() throws IOException {
+        Stage currentStage = (Stage) textInput.getScene().getWindow();
+        currentStage.close();
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);

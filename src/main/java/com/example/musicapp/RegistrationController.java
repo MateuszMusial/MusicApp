@@ -38,6 +38,9 @@ public class RegistrationController {
         //                                str email,      str username);
 
         if(isUserRegistered){
+            Stage currentStage = (Stage) loginField.getScene().getWindow();
+            currentStage.close();
+
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("login-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);

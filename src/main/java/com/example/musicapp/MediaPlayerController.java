@@ -41,6 +41,9 @@ public class MediaPlayerController {
 
     @FXML
     protected void onBackButtonClick() throws IOException {
+        Stage currentStage = (Stage) artistLabel.getScene().getWindow();
+        currentStage.close();
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
