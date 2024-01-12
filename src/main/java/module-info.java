@@ -9,6 +9,7 @@ module com.example.musicapp {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires java.sql;
+    requires java.desktop;
 
 
     opens com.example.musicapp to javafx.fxml;
