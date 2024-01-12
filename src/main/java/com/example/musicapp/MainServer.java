@@ -12,7 +12,7 @@ public class MainServer {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
 
         // Uruchamianie serwera w puli wątków na różnych portach
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             executorService.submit(new Server(12345 + i));
         }
 
