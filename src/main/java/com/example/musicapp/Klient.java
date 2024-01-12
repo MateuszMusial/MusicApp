@@ -10,51 +10,30 @@ public class Klient {
     private static Socket socket;
 
     public static void main(String[] args) {
-        int startingPort = 12345;
-        int maxAttempts = 10;
-
-        for (int i = 0; i < maxAttempts; i++) {
-            try {
-                // Adres serwera
-                String serverAddress = "localhost";
-
-                // Próba nawiązania połączenia na danym porcie
-                int currentPort = startingPort + i;
-                if (isPortAvailable(serverAddress, currentPort)) {
-                    System.out.println("Port " + currentPort + " jest dostępny.");
-                    openConnection(serverAddress, currentPort);
-                    receiveWelcomeMessage();
-                    sendToServerLogin("Admin", "Admin");
-                    //sendRegistrationToServer("imie", "nazwisko", "user", "user");
-                    Thread.sleep(10000);
-
-                    // LoginController
-
-                    //closeConnection();
-                    break; // Przerwij pętlę, gdy nawiązane zostanie połączenie na dostępnym porcie
-                } else {
-                    System.out.println("Port " + currentPort + " jest zajęty.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        int Port = 12345;
+        String serverAddress = "localhost";
+        try {
+            socket = new Socket(serverAddress, Port);
+            System.out.println("Klient Pawel został podłączony do serwera na porcie " + Port + ".");
+            receiveWelcomeMessage();
+            sendToServerLogin("Admin", "Admin");
+            //sendRegistrationToServer();
+            closeConnection();
+        } catch (IOException e) {
+            System.out.println("Port " + Port + " jest zajęty.");
+            //e.printStackTrace();
         }
     }
-    public static boolean isPortAvailable(String host, int port) {
-        try (ServerSocket ignored = new ServerSocket(port)) {
-            return false;
-        } catch (IOException e) {
+
+    private static Boolean openConnection(String serverAddress, int serverPort) throws IOException {
+        try(Socket socket = new Socket(serverAddress, serverPort)) {
+            System.out.println("Klient Pawel został podłączony do serwera na porcie " + serverPort + ".");
             return true;
         }
-    }
-
-
-
-    private static void openConnection(String serverAddress, int serverPort) throws IOException {
-        socket = new Socket(serverAddress, serverPort);
-        System.out.println("Klient Pawel został podłączony do serwera na porcie " + serverPort + ".");
+        catch (IOException e) {
+            System.out.println("Port " + serverPort + " jest zajęty.");
+            return false;
+        }
     }
 
     private static void closeConnection() throws IOException {

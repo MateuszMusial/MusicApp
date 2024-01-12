@@ -24,7 +24,7 @@ public class Server implements Callable<Void> {
 
             while (true) {
                 clientSocket = serverSocket.accept();
-                System.out.println("Klient Pawel został podłączony do serwera na porcie " + port + ".");
+                System.out.println("Klient "+ clientSocket.getPort()+" został podłączony do serwera na porcie " + serverSocket.getLocalPort() + ".");
                 handleClient();
             }
 
@@ -38,7 +38,26 @@ public class Server implements Callable<Void> {
         return null;
     }
 
+    /*@Override
+    public void run() {
+        try {
+            System.out.println("Serwer Pawel został uruchomiony na porcie " + port + ".");
+            serverSocket = new ServerSocket(port);
 
+            while (true) {
+                clientSocket = serverSocket.accept();
+                System.out.println("Klient "+ clientSocket.getPort()+" został podłączony do serwera na porcie " + serverSocket.getLocalPort() + ".");
+                handleClient();
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeServerSocket();
+        }
+    }
+*/
     private void handleClient() {
         try {
             sendWelcomeMessage();
