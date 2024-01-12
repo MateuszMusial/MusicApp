@@ -11,6 +11,7 @@ public class Server implements Callable<Void> {
     private int port;
     private ServerSocket serverSocket;
     private Socket clientSocket;
+
     public Server(int port) {
         this.port = port;
     }
@@ -60,10 +61,11 @@ public class Server implements Callable<Void> {
 */
     private void handleClient() {
         try {
-            sendWelcomeMessage();
-            receiveAndProcessDataLogin();
+            //sendWelcomeMessage();
+            Boolean change = receiveAndProcessDataLogin();
+            System.out.println(change);
+            sendLoginAnswer(change);
             // receiveAndProcessDataRegistration();
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -78,7 +80,48 @@ public class Server implements Callable<Void> {
         outputStream.flush();
     }
 
-    private void receiveAndProcessDataLogin() throws IOException {
+    private void sendLoginAnswer(Boolean out) throws IOException {
+        try(OutputStream outputStream = clientSocket.getOutputStream())
+        {
+            if(out)
+            {
+                String message = "true";
+                outputStream.write(message.getBytes());
+                outputStream.flush();
+                System.out.println("Wysłano true");
+            }
+            else
+            {
+                String message = "false";
+                outputStream.write(message.getBytes());
+                outputStream.flush();
+                System.out.println("Wysłano false");
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        /*
+        System.out.println(out);
+        OutputStream outputStream = clientSocket.getOutputStream();
+        if(out)
+        {
+            String message = "true";
+            outputStream.write(message.getBytes());
+            outputStream.flush();
+            System.out.println("Wysłano true");
+        }
+        else
+        {
+            String message = "false";
+            outputStream.write(message.getBytes());
+            outputStream.flush();
+            System.out.println("Wysłano false");
+        }*/
+    }
+
+    private Boolean receiveAndProcessDataLogin() throws IOException {
         try (InputStream inputStream = clientSocket.getInputStream()) {
             byte[] buffer = new byte[1024];
 
@@ -95,14 +138,18 @@ public class Server implements Callable<Void> {
             // obsługa bazy danych MySQL
             if (DatabaseHandler.loginUser(login, password)) {
                 System.out.println("Zalogowano pomyślnie.");
+                return true;
             } else {
                 System.out.println("Błędny login lub hasło.");
+                return false;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
+
 
     private void closeClientSocket() {
         try {

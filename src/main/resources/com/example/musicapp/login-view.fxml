@@ -7,10 +7,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="597.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicapp.LoginController">
    <Button blendMode="MULTIPLY" layoutX="275.0" layoutY="272.0" mnemonicParsing="false" onAction="#onLoginButtonClicked" text="Login" />
-   <PasswordField blendMode="SOFT_LIGHT" layoutX="219.0" layoutY="238.0" />
-   <TextField blendMode="SOFT_LIGHT" layoutX="219.0" layoutY="193.0" />
-   <Text fx:id="loginTextField" layoutX="182.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login:"/>
-   <Text fx:id="passwordField" layoutX="154.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+   <PasswordField fx:id="passwordField" blendMode="SOFT_LIGHT" layoutX="219.0" layoutY="238.0" />
+   <TextField fx:id="loginTextField" blendMode="SOFT_LIGHT" layoutX="219.0" layoutY="193.0" />
+   <Text layoutX="182.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login:"/>
+   <Text layoutX="154.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="224.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@logo1.png" />

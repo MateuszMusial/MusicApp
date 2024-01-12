@@ -1,15 +1,21 @@
 package com.example.musicapp;
-
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Klient {
 
     private static Socket socket;
+    static InputStream inputStream;
 
-    public static void main(String[] args) {
+
+    int Port = 12345;
+    String serverAddress = "localhost";
+    Klient() throws IOException {
+        socket = new Socket(serverAddress, Port);
+        inputStream = socket.getInputStream();
+    }
+
+   /* public static void main(String[] args) {
         int Port = 12345;
         String serverAddress = "localhost";
         try {
@@ -25,43 +31,39 @@ public class Klient {
         }
     }
 
-    private static Boolean openConnection(String serverAddress, int serverPort) throws IOException {
-        try(Socket socket = new Socket(serverAddress, serverPort)) {
-            System.out.println("Klient Pawel został podłączony do serwera na porcie " + serverPort + ".");
-            return true;
-        }
-        catch (IOException e) {
-            System.out.println("Port " + serverPort + " jest zajęty.");
-            return false;
-        }
-    }
-
+    */
     private static void closeConnection() throws IOException {
-        // Shutdown the output to signal the server that no more data will be sent
         socket.shutdownOutput();
-
-        // Give some time for the server to process the shutdown
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        // Close the socket
         socket.close();
         System.out.println("Klient Pawel został odłączony od serwera.");
     }
 
 
-    private static void receiveWelcomeMessage() throws IOException {
-        InputStream inputStream = socket.getInputStream();
+    public static String receiveWelcomeMessage() throws IOException {
+        inputStream = socket.getInputStream();
         byte[] buffer = new byte[1024];
         int bytesRead = inputStream.read(buffer);
         String receivedMessage = new String(buffer, 0, bytesRead);
         System.out.println("Otrzymano od serwera: " + receivedMessage);
+        return receivedMessage;
+    }
+    public static String receiveLoginAnswer() throws IOException {
+
+        inputStream = socket.getInputStream();
+
+        byte[] buffer = new byte[1024];
+
+        int bytesRead = inputStream.read(buffer);
+        System.out.println(bytesRead);
+        return new String(buffer, 0, bytesRead);
     }
 
-    private static void sendToServerLogin(String login, String password) throws IOException {
+    public static void sendToServerLogin(String login, String password) throws IOException {
         OutputStream outputStream = socket.getOutputStream();
 
         outputStream.write(login.getBytes());
@@ -90,4 +92,6 @@ public class Klient {
             dataOutputStream.flush();
         }
     }
+
+
 }

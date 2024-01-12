@@ -4,12 +4,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class LoginController {
+    int Port = 12345;
+    String serverAddress = "localhost";
 
     Klient klient = new Klient();
 
@@ -17,25 +21,27 @@ public class LoginController {
     @FXML
     public Label infoLabel;
     @FXML
-    public Text loginTextField;
+    public TextField loginTextField;
     @FXML
-    public Text passwordField;
+    public PasswordField passwordField;
+
+    public LoginController() throws IOException {
+    }
 
     @FXML
     void onLoginButtonClicked() throws IOException {
-        boolean isCredentialCorrect = true;
+        String isCredentialCorrect = "false";
 
         String inputLogin = loginTextField.getText();
         String inputPassword = passwordField.getText();
 
         // tutaj wywolujemy funkcje ktora wysyla dane do sprawdzenia i zwraca tru/false
+        System.out.println(inputLogin + " " + inputPassword);
+        klient.sendToServerLogin(inputLogin, inputPassword);
+        isCredentialCorrect = klient.receiveWelcomeMessage();
+        System.out.println(isCredentialCorrect);
 
-        //Klient.sendToServer(inputLogin, inputPassword);
-        // isCredentialCorrect = funkcja1(str inputlogin, str inputpassword);
-
-        if(isCredentialCorrect){
-
-
+        if(isCredentialCorrect.equals("true")){
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
