@@ -3,74 +3,73 @@ import java.io.*;
 import java.net.Socket;
 
 public class Klient {
-
     private static Socket socket;
     static InputStream inputStream;
-
-
+    static OutputStream outputStream;
     int Port = 12345;
     String serverAddress = "localhost";
     Klient() throws IOException {
         socket = new Socket(serverAddress, Port);
         inputStream = socket.getInputStream();
+        outputStream = socket.getOutputStream();
+        receiveWelcomeMessage();
     }
+   private static void closeConnection() throws IOException {
+       try (Socket socket = Klient.socket) {
+           socket.shutdownOutput();
+           Thread.sleep(10000);
+       } catch (InterruptedException e) {
+           e.printStackTrace();
+       }
+       System.out.println("Klient Pawel został odłączony od serwera.");
+   }
 
-   /* public static void main(String[] args) {
-        int Port = 12345;
-        String serverAddress = "localhost";
-        try {
-            socket = new Socket(serverAddress, Port);
-            System.out.println("Klient Pawel został podłączony do serwera na porcie " + Port + ".");
-            receiveWelcomeMessage();
-            sendToServerLogin("Admin", "Admin");
-            //sendRegistrationToServer();
-            closeConnection();
-        } catch (IOException e) {
-            System.out.println("Port " + Port + " jest zajęty.");
-            //e.printStackTrace();
-        }
-    }
-
-    */
-    private static void closeConnection() throws IOException {
-        socket.shutdownOutput();
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        socket.close();
-        System.out.println("Klient Pawel został odłączony od serwera.");
-    }
 
 
     public static String receiveWelcomeMessage() throws IOException {
         inputStream = socket.getInputStream();
         byte[] buffer = new byte[1024];
         int bytesRead = inputStream.read(buffer);
-        String receivedMessage = new String(buffer, 0, bytesRead);
-        System.out.println("Otrzymano od serwera: " + receivedMessage);
-        return receivedMessage;
+        if (bytesRead > 0) {
+            String receivedMessage = new String(buffer, 0, bytesRead);
+            System.out.println("Otrzymano od serwera: " + receivedMessage);
+            return receivedMessage;
+        } else {
+            return "";
+        }
     }
+
     public static String receiveLoginAnswer() throws IOException {
-
-        inputStream = socket.getInputStream();
-
+        if (socket.isClosed()) {
+            System.out.println("Socket is closed");
+        }
+        else {
+            System.out.println("Socket is not closed");
+        }
+        InputStream a = socket.getInputStream();
         byte[] buffer = new byte[1024];
 
-        int bytesRead = inputStream.read(buffer);
-        System.out.println(bytesRead);
-        return new String(buffer, 0, bytesRead);
-    }
+        int bytesRead = a.read(buffer);
+        if (bytesRead > 0) {
+            String receivedMessage = new String(buffer, 0, bytesRead);
+            System.out.println("Otrzymano od serwera: " + receivedMessage);
+            return receivedMessage;
+        } else {
+            return "";
+        }
+   }
+
+
 
     public static void sendToServerLogin(String login, String password) throws IOException {
-        OutputStream outputStream = socket.getOutputStream();
+        outputStream = socket.getOutputStream();
 
         outputStream.write(login.getBytes());
         outputStream.flush();
 
         outputStream.write(password.getBytes());
         outputStream.flush();
+        System.out.println("Wysłano login i hasło do serwera.");
     }
 
     private static void sendRegistrationToServer(String firstName, String lastName, String login, String password) throws IOException {

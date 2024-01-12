@@ -12,12 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-    int Port = 12345;
-    String serverAddress = "localhost";
-
     Klient klient = new Klient();
-
-
     @FXML
     public Label infoLabel;
     @FXML
@@ -29,7 +24,7 @@ public class LoginController {
     }
 
     @FXML
-    void onLoginButtonClicked() throws IOException {
+    void onLoginButtonClicked() throws IOException, InterruptedException {
         String isCredentialCorrect = "false";
 
         String inputLogin = loginTextField.getText();
