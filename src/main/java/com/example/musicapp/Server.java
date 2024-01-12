@@ -22,12 +22,10 @@ public class Server implements Callable<Void> {
         try {
             System.out.println("Serwer Pawel został uruchomiony na porcie " + port + ".");
             serverSocket = new ServerSocket(port);
+            clientSocket = serverSocket.accept();
+            System.out.println("Klient " + clientSocket.getPort() + " został podłączony do serwera na porcie " + serverSocket.getLocalPort() + ".");
+            handleClient();
 
-            while (true) {
-                clientSocket = serverSocket.accept();
-                System.out.println("Klient "+ clientSocket.getPort()+" został podłączony do serwera na porcie " + serverSocket.getLocalPort() + ".");
-                handleClient();
-            }
 
 
         } catch (IOException e) {
@@ -40,8 +38,9 @@ public class Server implements Callable<Void> {
         try {
             sendWelcomeMessage();
             Boolean out = receiveAndProcessDataLogin();
+            receiveAndProcessDataLogin();
             sendLoginAnswer(out);
-            closeClientSocket();
+            //closeClientSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,7 +75,6 @@ public class Server implements Callable<Void> {
 
 
     private Boolean receiveAndProcessDataLogin() {
-
         try (InputStream inputStream = clientSocket.getInputStream()) {
             byte[] buffer = new byte[1024];
             // Odbierz login
@@ -87,16 +85,6 @@ public class Server implements Callable<Void> {
             bytesRead = inputStream.read(buffer);
             String password = new String(buffer, 0, bytesRead).trim();
             System.out.println("Otrzymano hasło od klienta: " + password);
-
-            if (!clientSocket.isClosed())
-            {
-                System.out.println("Client socket is not closed.");
-            }
-            else
-            {
-                System.out.println("Client socket is already closed.");
-            }
-
             // obsługa bazy danych MySQL
             if (DatabaseHandler.loginUser(login, password)) {
                 System.out.println("Zalogowano pomyślnie.");
@@ -110,7 +98,7 @@ public class Server implements Callable<Void> {
         }
     }
 
-        private void closeClientSocket() {
+    private void closeClientSocket() {
         try {
             if (clientSocket != null && !clientSocket.isClosed()) {
                 clientSocket.close();
