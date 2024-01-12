@@ -12,7 +12,7 @@ public class Klient {
         socket = new Socket(serverAddress, Port);
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
-        receiveWelcomeMessage();
+        receiveMessage();
     }
    private static void closeConnection() throws IOException {
        try (Socket socket = Klient.socket) {
@@ -23,10 +23,7 @@ public class Klient {
        }
        System.out.println("Klient Pawel został odłączony od serwera.");
    }
-
-
-
-    public static String receiveWelcomeMessage() throws IOException {
+    public static String receiveMessage() throws IOException {
         inputStream = socket.getInputStream();
         byte[] buffer = new byte[1024];
         int bytesRead = inputStream.read(buffer);

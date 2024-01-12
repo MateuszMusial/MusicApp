@@ -38,12 +38,10 @@ public class Server implements Callable<Void> {
     }
     private void handleClient() {
         try {
-            //sendWelcomeMessage();
-            Boolean change = receiveAndProcessDataLogin();
-            System.out.println(change);
             sendWelcomeMessage();
-            //sendLoginAnswer(change);
-            // receiveAndProcessDataRegistration();
+            Boolean out = receiveAndProcessDataLogin();
+            sendLoginAnswer(out);
+            closeClientSocket();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,7 +49,7 @@ public class Server implements Callable<Void> {
 
     private void sendWelcomeMessage() throws IOException {
         OutputStream outputStream = clientSocket.getOutputStream();
-        String message = "true";
+        String message = "Witaj";
         outputStream.write(message.getBytes());
         outputStream.flush();
     }
