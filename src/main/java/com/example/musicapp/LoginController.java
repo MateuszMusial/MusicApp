@@ -33,7 +33,9 @@ public class LoginController {
         // tutaj wywolujemy funkcje ktora wysyla dane do sprawdzenia i zwraca tru/false
         System.out.println(inputLogin + " " + inputPassword);
         klient.sendToServerLogin(inputLogin, inputPassword);
-        isCredentialCorrect = klient.receiveMessage();
+        System.out.println(klient.receiveMessage());
+        //isCredentialCorrect = klient.receiveMessage();
+        System.out.println(isCredentialCorrect);
         System.out.println(isCredentialCorrect);
 
         if(isCredentialCorrect.equals("true")){

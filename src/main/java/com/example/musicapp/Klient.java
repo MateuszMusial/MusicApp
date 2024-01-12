@@ -23,16 +23,20 @@ public class Klient {
        }
        System.out.println("Klient Pawel został odłączony od serwera.");
    }
-    public static String receiveMessage() throws IOException {
-        inputStream = socket.getInputStream();
-        byte[] buffer = new byte[1024];
-        int bytesRead = inputStream.read(buffer);
-        if (bytesRead > 0) {
-            String receivedMessage = new String(buffer, 0, bytesRead);
-            System.out.println("Otrzymano od serwera: " + receivedMessage);
-            return receivedMessage;
-        } else {
-            return "";
+    public static String receiveMessage() {
+        try {
+            byte[] buffer = new byte[1024];
+            int bytesRead = inputStream.read(buffer);
+            if (bytesRead > 0) {
+                String receivedMessage = new String(buffer, 0, bytesRead);
+                System.out.println("Otrzymano od serwera: " + receivedMessage);
+                return receivedMessage;
+            } else {
+                return "";
+            }
+        } catch (IOException e) {
+            System.out.println("Błąd odczytu wiadomości od serwera.");
+            throw new RuntimeException(e);
         }
     }
 

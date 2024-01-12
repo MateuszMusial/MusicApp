@@ -19,32 +19,32 @@ public class Server implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
+        try(ServerSocket serverSocket = new ServerSocket(port)) {
+            this.serverSocket = serverSocket;
+            System.out.println("Serwer został uruchomiony na porcie: " + port);
+            while (true) {
+                waitForClient();
+                sendWelcomeMessage();
+                sendLoginAnswer(receiveAndProcessDataLogin());
+                closeClientSocket();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeServerSocket();
+        }
+    }
+
+    private void waitForClient() {
         try {
-            System.out.println("Serwer Pawel został uruchomiony na porcie " + port + ".");
-            serverSocket = new ServerSocket(port);
+            System.out.println("Oczekiwanie na klienta...");
             clientSocket = serverSocket.accept();
-            System.out.println("Klient " + clientSocket.getPort() + " został podłączony do serwera na porcie " + serverSocket.getLocalPort() + ".");
-            handleClient();
-
-
-
+            System.out.println("Klient " + clientSocket.getInetAddress() + " został połączony.");
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    private void handleClient() {
-        try {
-            sendWelcomeMessage();
-            Boolean out = receiveAndProcessDataLogin();
-            receiveAndProcessDataLogin();
-            sendLoginAnswer(out);
-            //closeClientSocket();
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
+
 
     private void sendWelcomeMessage() throws IOException {
         OutputStream outputStream = clientSocket.getOutputStream();
@@ -54,25 +54,15 @@ public class Server implements Callable<Void> {
     }
 
     private void sendLoginAnswer(Boolean out) throws IOException {
-
+        System.out.println("Wysłano do klienta:");
         OutputStream outputStream = clientSocket.getOutputStream();
-            if (!clientSocket.isClosed()) {
-                if (out) {
-                    String message = "true";
-                    outputStream.write(message.getBytes());
-                    outputStream.flush();
-                    System.out.println("Wysłano true");
-                } else {
-                    String message = "false";
-                    outputStream.write(message.getBytes());
-                    outputStream.flush();
-                    System.out.println("Wysłano false");
-                }
-            } else {
-                System.out.println("Client socket is already closed.");
-            }
+        if (out) {
+            String message = "true";
+            outputStream.write(message.getBytes());
+            System.out.println("Wysłano do klienta: " + message);
+            outputStream.flush();
+        }
     }
-
 
     private Boolean receiveAndProcessDataLogin() {
         try (InputStream inputStream = clientSocket.getInputStream()) {
