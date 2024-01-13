@@ -50,7 +50,7 @@ public class RegistrationController {
             stage.show();
         }
         else{
-            infoLabel.setText("Please try again!");
+            infoLabel.setText("Login or Username already exist!");
         }
     }
 }
