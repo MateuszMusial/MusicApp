@@ -1,4 +1,7 @@
 package ServerPackage;
+import com.example.musicapp.HelloController;
+import javafx.application.Application;
+
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -19,20 +22,7 @@ public class ClientUDPAdam {
             ByteArrayOutputStream bStream = new ByteArrayOutputStream();
             ObjectOutput oo = new ObjectOutputStream(bStream);
             while(true){
-                // 1 wiadomosc, by server uzyskal dane klienta do odsylki
-                oo.writeObject(g0);
-                oo.flush();
-                byte[] serializedMessage = bStream.toByteArray();
-                socket.send(new DatagramPacket(serializedMessage, serializedMessage.length, servAddr, 4321));
-                // odbior powitania od servera
-                socket.receive(packet); // "a tu serwer wita"
-                System.out.println(new String(packet.getData(), 0, packet.getLength()));
-                // UDP przesyl obiektow
-                oo.writeObject(g2);
-                oo.flush();
-                byte[] serializedMessage2 = bStream.toByteArray();
-                socket.send(new DatagramPacket(serializedMessage2, serializedMessage2.length, servAddr, 4321));
-                oo.close();
+                Application.launch(HelloController.class);
                 break;
             }
         }

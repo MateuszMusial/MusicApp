@@ -11,6 +11,10 @@ public class ClientServerLoginMsg implements Serializable{
         login = lg;
         password = psswd;
     }
+    public ClientServerLoginMsg(){
+        login = "";
+        password = "";
+    }
     public void login(){
         Connection con = null;
         String SQL = "select login, password from users where login = " + "\"" + this.login  + "\"" +

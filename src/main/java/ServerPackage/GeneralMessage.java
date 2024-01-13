@@ -3,12 +3,13 @@ package ServerPackage;
 import java.io.Serializable;
 
 public class GeneralMessage implements Serializable {
-    ClientServerLoginMsg m1 = null;
-    ClientServerRegisterMsg m2 = null;
-    ClientServerSongMsg m3 = null;
+    public ClientServerLoginMsg m1;
+    public ClientServerRegisterMsg m2;
+    public ClientServerSongMsg m3;
     String prio = null;
     public GeneralMessage(String prio){
         this.prio = prio;
+        this.m1 = new ClientServerLoginMsg();
     }
     public void setLoginMessage(String login, String password){
         m1.login = login;
