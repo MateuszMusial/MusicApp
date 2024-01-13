@@ -1,32 +1,57 @@
 package ServerPackage;
 
+import com.example.musicapp.HelloController;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
+import javafx.application.Application;
+
 
 public class ClientTCPAdam {
     public static void main(String[] args) {
         Socket socket = null;
         try{ // IPv4 in args
-            int liczbaPytan = 4;
-            int liczbaLinijekPytania = 5;
             socket = new Socket(InetAddress.getByName(args[0]), 1234);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-            Scanner odp = new Scanner(System.in);
+            //aplikacja START
+            Application.launch(HelloController.class);
+            // przygotowanie do odczytu/zapisu w plikach // zamkniecie dopiero po wykonaniu calosci
+            // wysylka obiektow do klienta
+            OutputStream os = socket.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(os);
+            // odbior obiektow od klienta
+            InputStream is = socket.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(is);
             while(true){
-                System.out.println(in.readLine());
-                String nazwaStudenta = odp.nextLine();
-                out.println(nazwaStudenta);
-                for(int i = 0; i < liczbaPytan; i++) {
-                    for (int j = 0; j < 5; j++) {
-                        System.out.println(in.readLine());
-                    }
-                    out.println(odp.nextLine());
+                Object objectReceived = ois.readObject();
+                // rejestracja nowego klienta
+                if(objectReceived instanceof ClientServerRegisterMsg){
+                    final ClientServerRegisterMsg msg = (ClientServerRegisterMsg) objectReceived;
+                    // rejestracja w BD
+                    msg.register();
+                    // odsyla dane rejestracyjne jako potwierdzenie sukcesu
+                    oos.writeObject(msg);
+                    oos.flush();
+                    break;
                 }
-                System.out.println(in.readLine());
-                break;
+                // logowanie klienta, boolean jako sukces operacji (w klasie)
+                if(objectReceived instanceof ClientServerLoginMsg){
+                    final ClientServerLoginMsg msg = (ClientServerLoginMsg) objectReceived;
+                    // rejestracja w BD
+                    msg.login();
+                    // odsyla dane logowania jako potwierdzenie sukcesu
+                    oos.writeObject(msg);
+                    oos.flush();
+                }
+                // odbior zapytania o piosenke klienta i odeslanie piosenki
+                if(objectReceived instanceof ClientServerSongMsg){
+                    final ClientServerSongMsg msg = (ClientServerSongMsg) objectReceived;
+                    // zapytanie w BD
+                    msg.searchSong();
+                    // odsyla dane logowania jako potwierdzenie sukcesu
+                    oos.writeObject(msg);
+                    oos.flush();
+                }
             }
         }
         catch (Exception e) {

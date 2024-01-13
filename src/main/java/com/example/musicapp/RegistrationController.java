@@ -28,7 +28,7 @@ public class RegistrationController {
         boolean isUserRegistered = false;
 
         String inputUsername = usernameField.getText();
-        String inputlogin = loginField.getText();
+        String inputLogin = loginField.getText();
         String inputPassword = passwordField.getText();
         String inputEmail = emailField.getText();
 

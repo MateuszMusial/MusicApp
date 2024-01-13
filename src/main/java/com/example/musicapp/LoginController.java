@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
-    Klient klient = new Klient();
+    //Klient klient = new Klient();
     @FXML
     public Label infoLabel;
     @FXML
@@ -29,7 +29,7 @@ public class LoginController {
 
         String inputLogin = loginTextField.getText();
         String inputPassword = passwordField.getText();
-
+/*
         // tutaj wywolujemy funkcje ktora wysyla dane do sprawdzenia i zwraca tru/false
         System.out.println(inputLogin + " " + inputPassword);
         klient.sendToServerLogin(inputLogin, inputPassword);
@@ -37,8 +37,8 @@ public class LoginController {
         //isCredentialCorrect = klient.receiveMessage();
         System.out.println(isCredentialCorrect);
         System.out.println(isCredentialCorrect);
-
-        if(isCredentialCorrect.equals("true")){
+*/
+        if(true){
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("menu-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);

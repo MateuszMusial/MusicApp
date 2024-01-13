@@ -12,10 +12,6 @@ public class HelloController extends Application {
 
     private Stage primaryStage;
 
-    public static void main(String[] args) {
-        launch();
-    }
-
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;

@@ -1,10 +1,7 @@
 package ServerPackage;
-
-import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
-import java.sql.*;
-import java.util.Scanner;
+
 
 public class ServerThreadTCPAdam extends Thread {
     Socket mySocket;
@@ -15,82 +12,8 @@ public class ServerThreadTCPAdam extends Thread {
         mySocket = socket;
         activeClients = actCli;
     }
-    // funkcja do rejestracji nowego klienta (= wprowadzenie jego danych do BD)
-    public void register(ClientServerRegisterMsg msg){
-        Connection con = null;
-        String SQL = "insert into users values( " +
-                "\"" + msg.username + "\"," + "\"" + msg.login + "\"," +
-                "\"" + msg.password + "\"," + "\"" + msg.email + "\"," + "\"" + "\"" + msg.address + "\"," + "\"" +
-                msg.age + "\")";
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/musicappdb",
-                    "root", "root");
-            Statement stat = con.createStatement();
-            stat.executeUpdate(SQL);
-        } catch (Exception excpt) {
-            excpt.printStackTrace();
-        }
-        finally{
-            try {
-                con.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
-    public void login(ClientServerLoginMsg msg){
-        Connection con = null;
-        String SQL = "SELECT STATEMENT";
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/musicappdb",
-                    "root", "root");
-            Statement stat = con.createStatement();
-            stat.executeUpdate(SQL);
-        } catch (Exception excpt) {
-            excpt.printStackTrace();
-        }
-        finally{
-            try {
-                con.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
-    public void searchSong(ClientServerSongMsg msg){
-        Connection con = null;
-        String SQL = "select top 1 idsong, link from songs" +
-                " where title =  \"" + msg.title + "\" and album = " +
-                msg.album + "\" and artist = " +
-                msg.artist;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3307/musicappdb",
-                    "root", "root");
-            Statement stat = con.createStatement();
-            ResultSet res = stat.executeQuery(SQL);
-            if (!res.next()) {
-                // do nothing
-                msg.link = "SONG NOT FOUND!";
-                msg.idsong = Integer.parseInt(String.valueOf(-1));
-            }
-            else{
-                msg.link = String.valueOf(res.getDate("link"));
-                msg.idsong = Integer.parseInt(res.getString("idsong"));
-                msg.getFile();
-            }
-        } catch (Exception excpt) {
-            excpt.printStackTrace();
-        }
-        finally{
-            try {
-                con.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     public void playSong(){
 
@@ -115,7 +38,7 @@ public class ServerThreadTCPAdam extends Thread {
                 if(objectReceived instanceof ClientServerRegisterMsg){
                     final ClientServerRegisterMsg msg = (ClientServerRegisterMsg) objectReceived;
                     // rejestracja w BD
-                    register(msg);
+                    msg.register();
                     // odsyla dane rejestracyjne jako potwierdzenie sukcesu
                     oos.writeObject(msg);
                     oos.flush();
@@ -125,7 +48,7 @@ public class ServerThreadTCPAdam extends Thread {
                 if(objectReceived instanceof ClientServerLoginMsg){
                     final ClientServerLoginMsg msg = (ClientServerLoginMsg) objectReceived;
                     // rejestracja w BD
-                    login(msg);
+                    msg.login();
                     // odsyla dane logowania jako potwierdzenie sukcesu
                     oos.writeObject(msg);
                     oos.flush();
@@ -134,7 +57,7 @@ public class ServerThreadTCPAdam extends Thread {
                 if(objectReceived instanceof ClientServerSongMsg){
                     final ClientServerSongMsg msg = (ClientServerSongMsg) objectReceived;
                     // zapytanie w BD
-                    searchSong(msg);
+                    msg.searchSong();
                     // odsyla dane logowania jako potwierdzenie sukcesu
                     oos.writeObject(msg);
                     oos.flush();
