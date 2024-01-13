@@ -11,6 +11,7 @@ public class Server implements Callable<Void> {
     private int port;
     private ServerSocket serverSocket;
     private Socket clientSocket;
+    OutputStream outputStream;
 
     public Server(int port) {
         this.port = port;
@@ -22,8 +23,8 @@ public class Server implements Callable<Void> {
         try(ServerSocket serverSocket = new ServerSocket(port)) {
             this.serverSocket = serverSocket;
             System.out.println("Serwer został uruchomiony na porcie: " + port);
+            waitForClient();
             while (true) {
-                waitForClient();
                 sendWelcomeMessage();
                 sendLoginAnswer(receiveAndProcessDataLogin());
                 closeClientSocket();
@@ -53,16 +54,23 @@ public class Server implements Callable<Void> {
         outputStream.flush();
     }
 
-    private void sendLoginAnswer(Boolean out) throws IOException {
-        System.out.println("Wysłano do klienta:");
-        OutputStream outputStream = clientSocket.getOutputStream();
-        if (out) {
-            String message = "true";
-            outputStream.write(message.getBytes());
-            System.out.println("Wysłano do klienta: " + message);
-            outputStream.flush();
+    private void sendLoginAnswer(Boolean out) {
+        try {
+            System.out.println("Wysłano do klienta:");
+            outputStream = clientSocket.getOutputStream();
+            if (out) {
+                String message = "true";
+                outputStream.write(message.getBytes());
+                System.out.println("Wysłano do klienta: " + message);
+                outputStream.flush();
+                // Nie zamykaj gniazda tutaj
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+
 
     private Boolean receiveAndProcessDataLogin() {
         try (InputStream inputStream = clientSocket.getInputStream()) {

@@ -6,13 +6,26 @@ public class Klient {
     private static Socket socket;
     static InputStream inputStream;
     static OutputStream outputStream;
-    int Port = 12345;
-    String serverAddress = "localhost";
-    Klient() throws IOException {
+    static int Port = 12345;
+    static String serverAddress = "localhost";
+    /*Klient() throws IOException {
         socket = new Socket(serverAddress, Port);
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
         receiveMessage();
+    }
+*/
+    public static void main(String[] args) {
+        try {
+            socket = new Socket(serverAddress, Port);
+            inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+            receiveMessage();
+            sendToServerLogin("user", "user");
+            receiveMessage();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
    private static void closeConnection() throws IOException {
        try (Socket socket = Klient.socket) {
@@ -41,24 +54,29 @@ public class Klient {
     }
 
     public static String receiveLoginAnswer() throws IOException {
-        if (socket.isClosed()) {
-            System.out.println("Socket is closed");
-        }
-        else {
-            System.out.println("Socket is not closed");
-        }
-        InputStream a = socket.getInputStream();
-        byte[] buffer = new byte[1024];
+        try {
+            if (socket.isClosed()) {
+                System.out.println("Socket is closed");
+                return "";
+            }
 
-        int bytesRead = a.read(buffer);
-        if (bytesRead > 0) {
-            String receivedMessage = new String(buffer, 0, bytesRead);
-            System.out.println("Otrzymano od serwera: " + receivedMessage);
-            return receivedMessage;
-        } else {
-            return "";
+            InputStream inputStream = socket.getInputStream();
+            byte[] buffer = new byte[1024];
+
+            int bytesRead = inputStream.read(buffer);
+            if (bytesRead > 0) {
+                String receivedMessage = new String(buffer, 0, bytesRead);
+                System.out.println("Otrzymano od serwera: " + receivedMessage);
+                return receivedMessage;
+            } else {
+                return "";
+            }
+        } catch (IOException e) {
+            System.out.println("Błąd odczytu wiadomości od serwera.");
+            throw new RuntimeException(e);
         }
-   }
+    }
+
 
 
 
