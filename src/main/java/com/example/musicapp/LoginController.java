@@ -39,7 +39,7 @@ public class LoginController {
         try{ // IPv4 UDP
             // ustawienia UDP
             socket = new DatagramSocket();
-            InetAddress servAddr = InetAddress.getByName("10.233.146.115");
+            InetAddress servAddr = InetAddress.getByName("169.254.15.176");
             byte buf[] = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             // UDP wysylka obiektow
