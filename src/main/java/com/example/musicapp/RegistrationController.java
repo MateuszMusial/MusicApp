@@ -43,7 +43,7 @@ public class RegistrationController {
         try { // IPv4 UDP
             // ustawienia UDP
             socket = new DatagramSocket();
-            InetAddress servAddr = InetAddress.getByName("169.254.15.176");
+            InetAddress servAddr = InetAddress.getByName("192.168.175.197");
             byte buf[] = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             // UDP wysylka obiektow
