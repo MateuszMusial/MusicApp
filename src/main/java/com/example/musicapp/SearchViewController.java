@@ -36,6 +36,7 @@ public class SearchViewController implements Initializable {
         boolean isSongFound = false;
 
         String userInput = textInput.getText();
+        String userChoice = choiceBox.getValue();
 
         // search song function
 
