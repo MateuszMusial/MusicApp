@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -17,13 +18,13 @@ import java.net.InetAddress;
 public class RegistrationController {
 
     @FXML
-    public Text usernameField;
+    public TextField usernameField;
     @FXML
-    public Text loginField;
+    public TextField loginField;
     @FXML
-    public Text passwordField;
+    public TextField passwordField;
     @FXML
-    public Text emailField;
+    public TextField emailField;
     @FXML
     public Label infoLabel;
 
@@ -79,7 +80,7 @@ public class RegistrationController {
             stage.show();
         }
         else{
-            infoLabel.setText("Login or Username already exist!");
+            infoLabel.setText("Login or Username exist!");
         }
     }
 }
