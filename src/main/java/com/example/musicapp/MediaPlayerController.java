@@ -15,15 +15,13 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MediaPlayerController {
-    String songString;
+    public String songString, artist, title;
     public ProgressBar progressbar;
     private MediaPlayer mediaPlayer;
     private String fileName = "tomorrow.mp3";
 
     @FXML
     public Label artistLabel;
-    @FXML
-    public Label totalTimeLabel;
     @FXML
     public Label songTitleLabel;
     @FXML
@@ -32,7 +30,6 @@ public class MediaPlayerController {
 
     public void initialize() {
         volumeSlider.setValue(0.5);
-
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (mediaPlayer != null) {
                 mediaPlayer.setVolume(newValue.doubleValue());
@@ -40,15 +37,17 @@ public class MediaPlayerController {
         });
     }
 
-    public void updateMediaInformation(String title, String artist, String totalTime) {
+    public void updateMediaInformation(String title, String artist) {
         artistLabel.setText(artist);
-        totalTimeLabel.setText(totalTime);
         songTitleLabel.setText(title);
     }
 
     @FXML
     protected void onPlayButtonClicked() {
         playSong();
+        System.out.println(title);
+        System.out.println(artist);
+        updateMediaInformation(this.title, this.artist);
     }
 
     public void onStopButtonClickedButtonClicked() {
@@ -81,6 +80,7 @@ public class MediaPlayerController {
             Media media = new Media(this.songString);
 
             mediaPlayer = new MediaPlayer(media);
+
 
             // Set the volume based on the slider value
             mediaPlayer.setVolume(volumeSlider.getValue());

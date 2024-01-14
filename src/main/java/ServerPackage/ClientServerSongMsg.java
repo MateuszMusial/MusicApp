@@ -34,15 +34,15 @@ public class ClientServerSongMsg implements Serializable {
                 this.album + "\" and artist = " +
                 this.artist; */
         if(searchBy.equals("Artist")) {
-            SQL = "select link from songs" +
+            SQL = "select link, title, artist from songs" +
                     " where artist =  \"" + this.artist + "\"";
         }
         else if(searchBy.equals("Album")){
-            SQL = "select link from songs" +
+            SQL = "select link, title, artist from songs" +
                     " where  album =  \"" + this.album + "\"";
         }
         else{
-            SQL = "select link from songs" +
+            SQL = "select link, title, artist from songs" +
                     " where  title =  \"" + this.title + "\"";
         }
         try {
@@ -56,9 +56,10 @@ public class ClientServerSongMsg implements Serializable {
                 this.songFound = false;
             }
             else{
-                System.out.println("ssss");
                 this.songFound = true;
                 this.link = String.valueOf(res.getString("link"));
+                this.title = String.valueOf(res.getString("title"));
+                this.artist = String.valueOf(res.getString("artist"));
                 this.songString = new File(this.link).toURI().toString();
             }
         } catch (Exception excpt) {

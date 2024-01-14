@@ -21,7 +21,7 @@ import java.nio.charset.Charset;
 import java.util.ResourceBundle;
 
 public class SearchViewController implements Initializable {
-    public String songString;
+    public String songString, artist, title;
     @FXML
     public Text textField;
     @FXML
@@ -71,6 +71,10 @@ public class SearchViewController implements Initializable {
             oo.close();
             if(msg.m3.songFound){
                 this.songString = msg.m3.songString;
+                this.artist = msg.m3.artist;
+                this.title = msg.m3.title;
+                System.out.println(artist);
+                System.out.println(title);
                 Stage currentStage = (Stage) textInput.getScene().getWindow();
                 //Scene currentScene = textInput.getScene();
                 //currentScene.setUserData(songString);
@@ -85,7 +89,8 @@ public class SearchViewController implements Initializable {
 
                 MediaPlayerController controller = fxmlLoader.getController();
                 controller.songString = this.songString;
-
+                controller.artist = this.artist;
+                controller.title = this.title;
                 Stage stage = new Stage();
                 stage.setTitle("MusicApp");
                 stage.setScene(newScene);
