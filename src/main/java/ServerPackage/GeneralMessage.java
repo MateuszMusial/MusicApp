@@ -1,5 +1,7 @@
 package ServerPackage;
 
+import javafx.scene.media.Media;
+
 import java.io.Serializable;
 
 public class GeneralMessage implements Serializable {
@@ -11,6 +13,7 @@ public class GeneralMessage implements Serializable {
         this.prio = prio;
         this.m1 = new ClientServerLoginMsg();
         this.m2 = new ClientServerRegisterMsg();
+        this.m3 = new ClientServerSongMsg();
     }
     public void setLoginMessage(String login, String password){
         m1.login = login;
@@ -24,7 +27,21 @@ public class GeneralMessage implements Serializable {
         m2.email = email;
     }
     // do zrobienia gdy zdecydujemy File vs Media
-    public void setSongMessage(String login, String password){
+    public void setSongMessageX(String artist, String album, String title, String searchBy, Media songMedia){
         // zmiany w m3..
+        m3.artist = artist;
+        m3.album = album;
+        m3.title = title;
+        m3.searchBy = searchBy;
+        //m3.songMedia = songMedia;
+    }
+    public void setSongMessage(String input, String choice){
+        if(choice.equals("Artist"))
+            m3.artist = input;
+        else if(choice.equals("Album"))
+            m3.album = input;
+        else
+            m3.title = input;
+        m3.searchBy = choice;
     }
 }

@@ -5,50 +5,61 @@ import javafx.scene.media.Media;
 import java.io.File;
 import java.io.Serializable;
 import java.sql.*;
-import javax.sound.sampled.*;
 public class ClientServerSongMsg implements Serializable {
-    public String title, album, artist;
-    public String link = null;
-    public File songFile = null;
-    public Media songMedia = null;
-    public int idsong = Integer.parseInt(null);
-    public ClientServerSongMsg(String tit, String alb, String art){
+    public String title, album, artist, searchBy;
+    public String link;
+    public String songString;
+    public boolean songFound = false;
+    public ClientServerSongMsg(String tit, String alb, String art, String sb, String lnk){
         title = tit;
         album = alb;
         artist = art;
-    }
-    public void setLink(String lnk){
+        searchBy = sb;
         link = lnk;
     }
-    public String getLink(){
-        return link;
+    public ClientServerSongMsg(){
+        title = "";
+        album = "";
+        artist = "";
+        link = "";
+        searchBy = "";
     }
-    public void setFile(){
-        songFile = new File(link).getAbsoluteFile();
-    }
-    public File getFile(){
-        return songFile;
-    }
+
     public void searchSong(){
         Connection con = null;
+        String SQL;
+        /* szuka po wszystkim
         String SQL = "select top 1 idsong, link from songs" +
                 " where title =  \"" + this.title + "\" and album = " +
                 this.album + "\" and artist = " +
-                this.artist;
+                this.artist; */
+        if(searchBy.equals("Artist")) {
+            SQL = "select link from songs" +
+                    " where artist =  \"" + this.artist + "\"";
+        }
+        else if(searchBy.equals("Album")){
+            SQL = "select link from songs" +
+                    " where  album =  \"" + this.album + "\"";
+        }
+        else{
+            SQL = "select link from songs" +
+                    " where  title =  \"" + this.title + "\"";
+        }
         try {
+            System.out.println(SQL);
             con = DriverManager.getConnection("jdbc:mysql://localhost:3307/musicappdb",
                     "root", "root");
             Statement stat = con.createStatement();
             ResultSet res = stat.executeQuery(SQL);
             if (!res.next()) {
                 // do nothing
-                this.link = "SONG NOT FOUND!";
-                this.idsong = Integer.parseInt(String.valueOf(-1));
+                this.songFound = false;
             }
             else{
+                System.out.println("ssss");
+                this.songFound = true;
                 this.link = String.valueOf(res.getString("link"));
-                this.idsong = Integer.parseInt(res.getString("idsong"));
-                this.getFile();
+                this.songString = new File(this.link).toURI().toString();
             }
         } catch (Exception excpt) {
             excpt.printStackTrace();

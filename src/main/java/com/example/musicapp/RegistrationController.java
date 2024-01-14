@@ -44,7 +44,7 @@ public class RegistrationController {
             // ustawienia UDP
             socket = new DatagramSocket();
             InetAddress servAddr = InetAddress.getByName("127.0.0.1");
-            byte buf[] = new byte[512];
+            byte buf[] = new byte[1024];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             // UDP wysylka obiektow
             ByteArrayOutputStream bStream = new ByteArrayOutputStream();

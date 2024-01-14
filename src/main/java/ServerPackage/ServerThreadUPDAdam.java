@@ -52,6 +52,19 @@ public class ServerThreadUPDAdam extends Thread {
                     throw new RuntimeException(ex);
                 }
             }
+            else if(x != null && x.prio.equals("m3")){
+                x.m3.searchSong();
+                try {
+                    oo.writeObject(x);
+                    oo.flush();
+                    byte[] serializedMessage = bStream.toByteArray();
+                    mySocket.send(new DatagramPacket(serializedMessage, serializedMessage.length,
+                            packetOtrzymany.getAddress(), packetOtrzymany.getPort()));
+                    System.out.println("odeslalem wiadomosc o zalogowaniu");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             else{
                 String received = new String(packetOtrzymany.getData(), 0, packetOtrzymany.getLength());
                 System.out.println(received);

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MediaPlayerController {
-
+    String songString;
     public ProgressBar progressbar;
     private MediaPlayer mediaPlayer;
     private String fileName = "tomorrow.mp3";
@@ -31,7 +31,8 @@ public class MediaPlayerController {
 
 
     public void initialize() {
-        // Set the volume slider value to the initial volume of the media player
+        Scene currentScene = songTitleLabel.getScene();
+        songString = (String) currentScene.getUserData();
         volumeSlider.setValue(0.5);
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -49,7 +50,7 @@ public class MediaPlayerController {
 
     @FXML
     protected void onPlayButtonClicked() {
-        playSong(fileName);
+        playSong();
     }
 
     public void onStopButtonClickedButtonClicked() {
@@ -76,17 +77,18 @@ public class MediaPlayerController {
         stage.show();
     }
 
-    protected void playSong(String fileName) {
-        String path = Objects.requireNonNull(getClass().getResource(fileName)).getPath();
-        Media media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+    protected void playSong() {
+        if(songString != null) {
+            System.out.println(songString);
+            Media media = new Media(this.songString);
+            mediaPlayer = new MediaPlayer(media);
 
-        // Set the volume based on the slider value
-        mediaPlayer.setVolume(volumeSlider.getValue());
+            // Set the volume based on the slider value
+            mediaPlayer.setVolume(volumeSlider.getValue());
 
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
+        }
     }
 
 }

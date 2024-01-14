@@ -9,7 +9,7 @@ public class ServerUDPAdam {
             socket = new DatagramSocket(4321);
             int activeClients = 0;
             while(true){
-                byte[] receiveData = new byte[512];
+                byte[] receiveData = new byte[1024];
                 DatagramPacket packetOtrzymany = new DatagramPacket(receiveData, receiveData.length);
                 socket.receive(packetOtrzymany);
                 System.out.println("New client connected");
