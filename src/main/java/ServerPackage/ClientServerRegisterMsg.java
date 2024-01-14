@@ -51,10 +51,10 @@ public class ClientServerRegisterMsg implements Serializable {
             ResultSet res = stat.executeQuery(SQL);
             if (!res.next()) {
                 // do nothing
-                this.isRegistered = false;
+                this.isRegistered = true;
             }
             else{
-                this.isRegistered = true;
+                this.isRegistered = false;
             }
         } catch (Exception excpt) {
             excpt.printStackTrace();

@@ -38,7 +38,9 @@ public class ServerThreadUPDAdam extends Thread {
                 }
             }
             else if(x != null && x.prio.equals("m2")){
-                x.m2.register();
+                x.m2.checkIfRegistered();
+                if(x.m2.isRegistered)
+                    x.m2.register();
                 try {
                     oo.writeObject(x);
                     oo.flush();
