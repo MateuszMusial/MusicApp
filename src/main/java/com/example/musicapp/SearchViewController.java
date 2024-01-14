@@ -72,19 +72,23 @@ public class SearchViewController implements Initializable {
             if(msg.m3.songFound){
                 this.songString = msg.m3.songString;
                 Stage currentStage = (Stage) textInput.getScene().getWindow();
-                Scene currentScene = textInput.getScene();
-                currentScene.setUserData(songString);
+                //Scene currentScene = textInput.getScene();
+                //currentScene.setUserData(songString);
                 currentStage.close();
                 //
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 // nowe
                 fxmlLoader.setLocation(getClass().getResource("player-view.fxml"));
-                Scene newScene = new Scene(fxmlLoader.load(), 600, 400);
+                Parent tableMediaPlayer = fxmlLoader.load();
+
+                Scene newScene = new Scene(tableMediaPlayer);
+
+                MediaPlayerController controller = fxmlLoader.getController();
+                controller.songString = this.songString;
+
                 Stage stage = new Stage();
                 stage.setTitle("MusicApp");
                 stage.setScene(newScene);
-                MediaPlayerController controller = fxmlLoader.getController();
-
                 stage.show();
             }
             else{

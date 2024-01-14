@@ -31,8 +31,6 @@ public class MediaPlayerController {
 
 
     public void initialize() {
-        Scene currentScene = songTitleLabel.getScene();
-        songString = (String) currentScene.getUserData();
         volumeSlider.setValue(0.5);
 
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -79,8 +77,9 @@ public class MediaPlayerController {
 
     protected void playSong() {
         if(songString != null) {
-            System.out.println(songString);
+            //System.out.println(songString);
             Media media = new Media(this.songString);
+
             mediaPlayer = new MediaPlayer(media);
 
             // Set the volume based on the slider value
