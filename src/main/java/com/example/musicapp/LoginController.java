@@ -36,7 +36,6 @@ public class LoginController {
 
         GeneralMessage msg = new GeneralMessage("m1");
         msg.setLoginMessage(inputLogin, inputPassword);
-        GeneralMessage msg2;
         DatagramSocket socket = null;
         try{ // IPv4 UDP
             // ustawienia UDP

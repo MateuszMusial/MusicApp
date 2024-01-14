@@ -10,6 +10,7 @@ public class GeneralMessage implements Serializable {
     public GeneralMessage(String prio){
         this.prio = prio;
         this.m1 = new ClientServerLoginMsg();
+        this.m2 = new ClientServerRegisterMsg();
     }
     public void setLoginMessage(String login, String password){
         m1.login = login;
