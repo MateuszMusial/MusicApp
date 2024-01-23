@@ -1,8 +1,10 @@
 package com.example.musicapp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
@@ -17,6 +19,7 @@ import java.util.Objects;
 public class MediaPlayerController {
     public String songString, artist, title;
     public ProgressBar progressbar;
+    public Button Playlist;
     private MediaPlayer mediaPlayer;
     private String fileName = "tomorrow.mp3";
 
@@ -90,5 +93,7 @@ public class MediaPlayerController {
         }
     }
 
+    public void onAddToPlaylistButtonClick() {
+    }
 }
 

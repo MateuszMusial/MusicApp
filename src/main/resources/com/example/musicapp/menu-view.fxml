@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.musicapp.MenuViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicapp.MenuViewController">
    <children>
       <Button fx:id="button1" layoutX="147.0" layoutY="184.0" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="59.0" prefWidth="112.0" text="Play Song">
          <font>
@@ -18,7 +18,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="244.0" layoutY="280.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="59.0" prefWidth="112.0" text="Logout">
+      <Button layoutX="332.0" layoutY="285.0" mnemonicParsing="false" onAction="#onLogoutButtonClick" prefHeight="59.0" prefWidth="112.0" text="Logout">
          <font>
             <Font size="18.0" />
          </font>
@@ -28,5 +28,10 @@
             <Image url="@logo1.png" />
          </image>
       </ImageView>
+      <Button fx:id="Playlist" layoutX="147.0" layoutY="285.0" mnemonicParsing="false" onAction="#onPlaylistButtonClick" prefHeight="59.0" prefWidth="112.0" text="Playlist">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

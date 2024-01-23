@@ -1,14 +1,12 @@
 package com.example.musicapp;
 
 import ServerPackage.GeneralMessage;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -17,7 +15,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class LoginController {
-    //Klient klient = new Klient();
     @FXML
     public Label infoLabel;
     @FXML

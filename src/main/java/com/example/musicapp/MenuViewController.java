@@ -1,5 +1,6 @@
 package com.example.musicapp;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class MenuViewController {
+    public Button Playlist;
     @FXML
     private Button button1;
     @FXML
@@ -49,5 +51,8 @@ public class MenuViewController {
         stage.setTitle("MusicApp");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onPlaylistButtonClick() {
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.musicapp.MediaPlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #92a8d1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicapp.MediaPlayerController">
    <children>
       <Button layoutX="34.0" layoutY="266.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="33.0" prefWidth="39.0">
          <graphic>
@@ -51,5 +51,6 @@
          </image>
       </ImageView>
       <Button fx:id="back" layoutX="526.0" layoutY="19.0" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back" />
+      <Button fx:id="Playlist" layoutX="31.0" layoutY="322.0" mnemonicParsing="false" onAction="#onAddToPlaylistButtonClick" prefHeight="26.0" prefWidth="105.0" text="Add to Playlist" />
    </children>
 </AnchorPane>
